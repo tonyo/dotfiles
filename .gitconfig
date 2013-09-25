@@ -1,0 +1,7 @@
+[color]
+	ui = auto
+[user]
+	email = revolver112@gmail.com
+	name = Anton Ovchinnikov
+[push]
+	default = simple
