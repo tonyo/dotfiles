@@ -1,0 +1,10 @@
+#!/bin/sh
+
+function u {
+  # is null?
+  local N=1
+  [ -z "$1" ] || N=$1
+  
+  # go to parent directory N times
+  for i in $(seq $N); do cd ..; done
+}

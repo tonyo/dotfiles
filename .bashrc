@@ -88,7 +88,6 @@ alias op='kde-open'
 # smart cp
 alias cps='rsync --progress'
 
-# move to grand-grand directories
-source ~/bin/updir.sh
-#alias ..='cd ..'
+# load useful functions
+source .bashrc_functions
 
