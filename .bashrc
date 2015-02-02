@@ -89,5 +89,5 @@ alias op='kde-open'
 alias cps='rsync --progress'
 
 # load useful functions
-source .bashrc_functions
+source ~/.bashrc_functions
 
