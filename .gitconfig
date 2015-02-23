@@ -5,3 +5,5 @@
 	name = Anton Ovchinnikov
 [push]
 	default = simple
+[core]
+	editor = vim
