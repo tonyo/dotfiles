@@ -1,6 +1,13 @@
 # readline options
 
+# Up or Down: complete from history
 "\e[A": history-search-backward
 "\e[B": history-search-forward
+
+"\ej": beginning-of-line
+"\e;": end-of-line
+"\ek": backward-word                                                                                                                                                                                           
+"\el": forward-word
+
 set show-all-if-ambiguous on
 set completion-ignore-case on
