@@ -51,11 +51,12 @@ nnoremap \wf :match<CR>
 
 
 " change to normal mode
-" also use Alt+L
 map \ei <Esc>
 map! \ei <Esc>
-map <C-L> <Esc>
-map! <C-L> <Esc>
+map <C-l> <Esc>
+map! <C-l> <Esc>
+map <A-l> <Esc>
+map! <A-l> <Esc>
 map ;; <Esc>
 map! ;; <Esc>
 
@@ -129,5 +130,7 @@ highlight Pmenu ctermbg=18
 " ctags support (look for 'tags' file in all the parent dirs)
 set tags=./tags;$HOME
 
+" backspace behaviour
+set backspace=indent,eol,start
 
 " ~/.vimrc ends here
