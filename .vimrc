@@ -2,6 +2,10 @@
 " My settings "
 """""""""""""""
 
+if filereadable(glob("~/.vim/vundle_file.vimrc")) 
+  source ~/.vim/vundle_file.vimrc
+endif
+
 syntax on
 
 " toggle line numbers
@@ -51,6 +55,7 @@ nnoremap \wf :match<CR>
 
 
 " change to normal mode
+" also use Alt+L
 map \ei <Esc>
 map! \ei <Esc>
 map <C-l> <Esc>
@@ -118,19 +123,24 @@ set tabstop=2
 set shiftwidth=2
 set expandtab
 
-" C++ specific
-au FileType cpp,c source ~/.vim/c_auto.vim
-
-" Vundle config
-source ~/.vim/vundle_vimrc.vim
-
 " Highlight Ctrl-P autocompletion menu
 highlight Pmenu ctermbg=18   
 
 " ctags support (look for 'tags' file in all the parent dirs)
 set tags=./tags;$HOME
 
-" backspace behaviour
 set backspace=indent,eol,start
+
+" Nerdtree
+map <C-n> :NERDTreeToggle<CR>
+
+" Airline
+let g:airline_powerline_fonts = 1
+set laststatus=2
+if !exists('g:airline_symbols')
+  let g:airline_symbols = {}
+endif
+let g:airline_symbols.space = "\ua0"
+
 
 " ~/.vimrc ends here
