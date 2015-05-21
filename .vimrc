@@ -2,7 +2,7 @@
 " My settings "
 """""""""""""""
 
-if filereadable(glob("~/.vim/vundle_file.vimrc")) 
+if filereadable(glob("~/.vim/vundle_file.vimrc"))
   source ~/.vim/vundle_file.vimrc
 endif
 
@@ -13,15 +13,12 @@ set number
 map <F10> :set invnumber<CR>
 map! <F10> <Esc>:set invnumber<CR>a
 
+" cursorline
 set cursorline
 hi CursorLine cterm=underline
 map <F9> :set invcursorline<CR>
 map! <F9> :set invcursorline<CR>a
 
-
-" highlight search
-set hlsearch!
-nnoremap <F3> :set hlsearch!<CR>
 
 " ignorecase during search
 set ic
@@ -32,17 +29,7 @@ filetype indent on
 
 autocmd FileType * setlocal formatoptions-=c formatoptions-=r formatoptions-=o
 
-" Ruby
-map \er <Esc>:w<CR>:!ruby %<CR>
-map! \er <Esc>:w<CR>:!ruby %<CR>
-iab rsh! #!/usr/bin/env ruby
-
-" Perl
-map \cp <Esc>:w<CR>:!perl -c %<CR>
-map! \cp <Esc>:w<CR>:!perl -c %<CR>
-iab psh! #!/usr/bin/env perl
-
-" Execute (shebang)
+" Execute (shebang) with Perl
 map \ep <Esc>:w<CR>:!perl %<CR>
 map! \ep <Esc>:w<CR>:!perl %<CR>
 
@@ -116,15 +103,20 @@ command WQ wq
 " highlight current line
 set t_Co=256
 color desert
-set cursorline 
-hi CursorLine cterm=underline 
+set cursorline
+hi CursorLine cterm=underline
+
+" highlight search
+highlight Search ctermbg=LightGreen ctermfg=Black
+set hlsearch!
+nnoremap <F3> :set hlsearch!<CR>
 
 set tabstop=2
 set shiftwidth=2
 set expandtab
 
 " Highlight Ctrl-P autocompletion menu
-highlight Pmenu ctermbg=18   
+highlight Pmenu ctermbg=18
 
 " ctags support (look for 'tags' file in all the parent dirs)
 set tags=./tags;$HOME
@@ -137,10 +129,5 @@ map <C-n> :NERDTreeToggle<CR>
 " Airline
 let g:airline_powerline_fonts = 1
 set laststatus=2
-if !exists('g:airline_symbols')
-  let g:airline_symbols = {}
-endif
-let g:airline_symbols.space = "\ua0"
-
 
 " ~/.vimrc ends here
