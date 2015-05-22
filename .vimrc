@@ -2,6 +2,8 @@
 " My settings "
 """""""""""""""
 
+" Install Vundle first:
+" $ git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 if filereadable(glob("~/.vim/vundle_file.vimrc"))
   source ~/.vim/vundle_file.vimrc
 endif
