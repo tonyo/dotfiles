@@ -22,7 +22,7 @@ shopt -s checkwinsize
 
 # If set, the pattern "**" used in a pathname expansion context will
 # match all files and zero or more directories and subdirectories.
-#shopt -s globstar
+shopt -s globstar
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
@@ -40,7 +40,7 @@ esac
 # uncomment for a colored prompt, if the terminal has the capability; turned
 # off by default to not distract the user: the focus in a terminal window
 # should be on the output of commands, not on the prompt
-#force_color_prompt=yes
+force_color_prompt=yes
 
 if [ -n "$force_color_prompt" ]; then
     if [ -x /usr/bin/tput ] && tput setaf 1 >&/dev/null; then
@@ -133,7 +133,6 @@ export PATH
 ##############
 # color prompt
 function prompt_command {
-
     local PWDNAME=$PWD
 
     # beautify working directory name
@@ -146,21 +145,12 @@ function prompt_command {
     local PS1_DIR="\[\e[1;31m\][\u@\h: \w]\[\e[0m\]"
     local PS1_ENDL="\n"
     local PS1_GO="\[\e[1;31m\]$\[\e[0m\] "
-    local PS1_DIR_LEN=$((${#USER}+${#HOSTNAME}+${#PWDNAME}+5))
-
-    COLS=$(tput cols)
-    local fillsize=$(($COLS-$PS1_DIR_LEN-1))
-    local FILL=" "
-    while [[ $fillsize -gt 0 ]]; do FILL="${FILL}─"; fillsize=$(($fillsize-1)); done
-
-    ### With fill:
-    # export PS1=${PS1_DIR}${FILL}${PS1_ENDL}${PS1_GO}
 
     ### With time:
     local TIME=" ($(date +'%H:%M:%S'))"
-    export PS1=${PS1_DIR}${TIME}${PS1_ENDL}${PS1_GO}
+    local GIT_INFO="\[\e[1;35m\]$(__git_ps1)\[\e[0m\]"
+    export PS1=${PS1_DIR}${GIT_INFO}${TIME}${PS1_ENDL}${PS1_GO}
 }
-
 PROMPT_COMMAND=prompt_command
 
 # git aliases
@@ -189,4 +179,8 @@ source ~/.bashrc_functions
 export TERM='xterm-256color'
 
 export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
+
+# Git prompt helper. Download it first:
+# $ curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -o ~/.git-prompt.sh
+source ~/.git-prompt.sh
 
