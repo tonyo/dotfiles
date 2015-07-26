@@ -157,6 +157,7 @@ PROMPT_COMMAND=prompt_command
 alias gitst='git status'
 alias gitf='git fetch'
 alias gitd='git diff'
+alias gitdc='git diff --cached'
 alias gitl='git log'
 
 # tmux aliases
