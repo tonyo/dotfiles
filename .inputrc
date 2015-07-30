@@ -1,4 +1,4 @@
-# readline options
+# Readline options
 
 # Up or Down: complete from history
 "\e[A": history-search-backward
@@ -6,8 +6,16 @@
 
 "\ej": beginning-of-line
 "\e;": end-of-line
-"\ek": backward-word                                                                                                                                                                                           
+"\ek": backward-word
 "\el": forward-word
 
+# Use only one Tab
 set show-all-if-ambiguous on
+# Ignore case for suggestions
 set completion-ignore-case on
+# Insensitivity between hyphens and underscores
+set completion-map-case on
+# Put / after directory names and * after programs
+set visible-stats on
+# Add some colors
+set colored-stats on
