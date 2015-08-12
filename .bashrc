@@ -120,7 +120,7 @@ fi
 test -s ~/.alias && . ~/.alias || true
 
 #############
-# PATH update 
+# PATH update
 
 # Delete '.' from PATH and add 'sbin'
 PATH=`echo $PATH | sed 's/:\.:/:/g; s/:\.$//g; s/\.://g'`
@@ -142,14 +142,21 @@ function prompt_command {
         PWDNAME="~${PWD:${#HOME}}"
     fi
 
-    local PS1_DIR="\[\e[1;31m\][\u@\h: \w]\[\e[0m\]"
+    # Escape sequences
+    local txtred="\e[1;31m"
+    local txtyellow="\e[1;33m"
+    local txtviolet="\e[1;35m"
+    local txtreset="\e[0m"
+
+    # Prompt components
+    local PS1_DIR="\[$txtred\]\u@\h: \[$txtyellow\]\w\[$txtred\]"
     local PS1_ENDL="\n"
-    local PS1_GO="\[\e[1;31m\]$\[\e[0m\] "
+    local PS1_GO="\[$txtred\]$ "
 
     ### With time:
-    local TIME=" ($(date +'%H:%M:%S'))"
-    local GIT_INFO="\[\e[1;35m\]$(__git_ps1)\[\e[0m\]"
-    export PS1=${PS1_DIR}${GIT_INFO}${TIME}${PS1_ENDL}${PS1_GO}
+    local TIME=" [$(date +'%H:%M:%S')]\[$txtreset\]"
+    local GIT_INFO="\[$txtviolet\]$(__git_ps1)\[$txtreset\]"
+    export PS1="${PS1_DIR}${GIT_INFO}${TIME}${PS1_ENDL}${PS1_GO}\[$txtreset\]"
 }
 PROMPT_COMMAND=prompt_command
 
