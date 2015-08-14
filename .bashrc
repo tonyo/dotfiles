@@ -156,7 +156,8 @@ function prompt_command {
     ### With time:
     local TIME=" [$(date +'%H:%M:%S')]\[$txtreset\]"
     local GIT_INFO="\[$txtviolet\]$(__git_ps1)\[$txtreset\]"
-    export PS1="${PS1_DIR}${GIT_INFO}${TIME}${PS1_ENDL}${PS1_GO}\[$txtreset\]"
+    local VENV="$(__get_venv_color)"
+    export PS1="${PS1_DIR}${GIT_INFO}${VENV}${TIME}${PS1_ENDL}${PS1_GO}\[$txtreset\]"
 }
 PROMPT_COMMAND=prompt_command
 

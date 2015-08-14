@@ -1,10 +1,21 @@
 #!/bin/sh
 
-function u {
-  # is null?
+u() {
   local N=1
   [ -z "$1" ] || N=$1
-  
-  # go to parent directory N times
+  # Go to parent directory N times
   for i in $(seq $N); do cd ..; done
+}
+
+
+__get_venv_color() {
+  # Get the colored part of the prompt which displays the active virtual env
+  local venv_name="$(basename "$VIRTUAL_ENV")"
+  local venv_color=""
+  if [ -n "$venv_name" ]; then
+    local txtviolet="\e[1;34m"
+    local txtreset="\e[0m"
+    venv_color=" \[$txtviolet\]{venv: $venv_name}\[$txtreset\]"
+  fi
+  echo "$venv_color"
 }
