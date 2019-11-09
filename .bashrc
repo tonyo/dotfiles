@@ -129,7 +129,10 @@ export PATH=$PATH:~/.local/bin:~/local_bin
 # Color prompt #
 ################
 function prompt_command {
+    # This needs to be first
+    local EXIT="$?"
     local PWDNAME=$PWD
+    local CMD_STATUS=""
 
     # beautify working directory name
     if [[ "${HOME}" == "${PWD}" ]]; then
@@ -142,12 +145,19 @@ function prompt_command {
     local txtred="\e[1;31m"
     local txtyellow="\e[1;33m"
     local txtviolet="\e[1;35m"
+    local txtgreen="\e[1;92m"
     local txtreset="\e[0m"
+
+    if [[ "$EXIT" == "0" ]]; then
+        CMD_STATUS="${txtgreen}✓${txtreset}"
+    else
+        CMD_STATUS="${txtviolet}✘${txtreset}"
+    fi
 
     # Prompt components
     local PS1_DIR="\[$txtred\]\u@\h: \[$txtyellow\]\w\[$txtred\]"
     local PS1_ENDL="\n"
-    local PS1_GO="\[$txtred\]$ "
+    local PS1_GO="${CMD_STATUS} \[$txtred\]$ "
 
     ### With time:
     local TIME=" [$(date +'%H:%M:%S')]\[$txtreset\]"
