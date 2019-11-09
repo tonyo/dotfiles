@@ -7,22 +7,18 @@
 
 # don't put duplicate lines or lines starting with space in the history.
 # See bash(1) for more options
-HISTCONTROL=ignoreboth
+export HISTCONTROL=ignoreboth
 
 # append to the history file, don't overwrite it
 shopt -s histappend
 
 # for setting history length see HISTSIZE and HISTFILESIZE in bash(1)
-HISTSIZE=1000
-HISTFILESIZE=2000
+HISTSIZE=5000
+HISTFILESIZE=5000
 
 # check the window size after each command and, if necessary,
 # update the values of LINES and COLUMNS.
 shopt -s checkwinsize
-
-# If set, the pattern "**" used in a pathname expansion context will
-# match all files and zero or more directories and subdirectories.
-shopt -s globstar
 
 # make less more friendly for non-text input files, see lesspipe(1)
 [ -x /usr/bin/lesspipe ] && eval "$(SHELL=/bin/sh lesspipe)"
@@ -73,9 +69,6 @@ esac
 if [ -x /usr/bin/dircolors ]; then
     test -r ~/.dircolors && eval "$(dircolors -b ~/.dircolors)" || eval "$(dircolors -b)"
     alias ls='ls --color=auto'
-    #alias dir='dir --color=auto'
-    #alias vdir='vdir --color=auto'
-
     alias grep='grep --color=auto'
     alias fgrep='fgrep --color=auto'
     alias egrep='egrep --color=auto'
@@ -106,9 +99,6 @@ if [ -f /etc/bash_completion ] && ! shopt -oq posix; then
     . /etc/bash_completion
 fi
 
-
-### NEW ###
-
 export EDITOR=/usr/bin/vim
 
 # Source global definitions
@@ -117,21 +107,27 @@ if [ -f /etc/bashrc ]; then
 fi
 
 # User specific aliases and functions
-test -s ~/.alias && . ~/.alias || true
+if [ -f ~/.bashrc_functions ]; then
+  . ~/.bashrc_functions
+fi
+if [ -f ~/.bashrc_local ]; then
+  . ~/.bashrc_local
+fi
 
-#############
-# PATH update
+################
+# PATH updates #
+################
 
 # Delete '.' from PATH and add 'sbin'
-PATH=`echo $PATH | sed 's/:\.:/:/g; s/:\.$//g; s/\.://g'`
-PATH=$PATH:/usr/sbin:/sbin
+export PATH=`echo $PATH | sed 's/:\.:/:/g; s/:\.$//g; s/\.://g'`
+export PATH=$PATH:/usr/sbin:/sbin
 
 # Local bin
-PATH=$PATH:~/bin:~/.local/bin
-export PATH
+export PATH=$PATH:~/.local/bin:~/local_bin
 
-##############
-# color prompt
+################
+# Color prompt #
+################
 function prompt_command {
     local PWDNAME=$PWD
 
@@ -161,6 +157,8 @@ function prompt_command {
 }
 PROMPT_COMMAND=prompt_command
 
+export TERM='xterm-256color'
+
 # git aliases
 alias gitst='git status'
 alias gitf='git fetch'
@@ -182,14 +180,23 @@ alias cps='rsync --progress'
 
 alias op='gnome-open'
 
-# load useful functions
-source ~/.bashrc_functions
-
-export TERM='xterm-256color'
-
-export PATH="$PATH:$HOME/.rvm/bin" # Add RVM to PATH for scripting
-
 # Git prompt helper. Download it first:
 # $ curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -o ~/.git-prompt.sh
-source ~/.git-prompt.sh
+if [ -f ~/.git-prompt.sh ]; then
+  . ~/.git-prompt.sh
+else
+  echo "WARNING: git-prompt helper is not installed"
+fi
 
+# "ls" colors
+export CLICOLOR=1
+export LSCOLORS=ExFxCxDxBxegedabagacad
+
+# Various auto-completion
+if [ -n "$(ls ~/.local/bash_completion/*.bash 2>/dev/null || true)" ]; then
+  source ~/.local/bash_completion/*.bash
+fi
+
+# Locale stuff
+export LC_ALL=en_US.UTF-8
+export LANG=en_US.UTF-8
