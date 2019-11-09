@@ -49,3 +49,13 @@ function _makefile_targets {
     COMPREPLY=( $(compgen -W "${targets[@]}" -- $curr_arg ) );
 }
 complete -F _makefile_targets make
+
+what-listens() {
+  PORT=$1
+  sudo lsof -iTCP -sTCP:LISTEN -n -P | grep $PORT
+}
+
+kill-on-port() {
+  PORT=$1
+  sudo lsof -iTCP -sTCP:LISTEN -n -P | grep $PORT | awk '{ print $2 }' | xargs kill -9;
+}

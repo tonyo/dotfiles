@@ -84,12 +84,8 @@ alias l='ls -CF'
 alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
 
 # Alias definitions.
-# You may want to put all your additions into a separate file like
-# ~/.bash_aliases, instead of adding them here directly.
-# See /usr/share/doc/bash-doc/examples in the bash-doc package.
-
-if [ -f ~/.bash_aliases ]; then
-    . ~/.bash_aliases
+if [ -f ~/.bashrc_aliases ]; then
+    . ~/.bashrc_aliases
 fi
 
 # enable programmable completion features (you don't need to enable
@@ -110,8 +106,12 @@ fi
 if [ -f ~/.bashrc_functions ]; then
   . ~/.bashrc_functions
 fi
+# Local configuration
 if [ -f ~/.bashrc_local ]; then
   . ~/.bashrc_local
+fi
+if [ -f ~/.bashrc_functions_local ]; then
+  . ~/.bashrc_functions_local
 fi
 
 ################
