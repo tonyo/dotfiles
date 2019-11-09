@@ -193,6 +193,8 @@ alias op='gnome-open'
 # Git prompt helper. Download it first:
 # $ curl https://raw.githubusercontent.com/git/git/master/contrib/completion/git-prompt.sh -o ~/.git-prompt.sh
 if [ -f ~/.git-prompt.sh ]; then
+  export GIT_PS1_SHOWDIRTYSTATE=1
+  export GIT_PS1_SHOWUPSTREAM="verbose"
   . ~/.git-prompt.sh
 else
   echo "WARNING: git-prompt helper is not installed"
