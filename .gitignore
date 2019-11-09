@@ -1,0 +1,5 @@
+# This file lives in your home folder
+.*.swp
+*.pyc
+*.bak
+.idea
