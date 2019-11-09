@@ -1,15 +1,23 @@
 #!/bin/sh
 
+# Move to parent directories N times
 u() {
   local N=1
   [ -z "$1" ] || N=$1
-  # Go to parent directory N times
   for i in $(seq $N); do cd ..; done
 }
 
 
+# Create a new directory and change to it
+mkd() {
+  local DIR_NAME=$1
+  mkdir $1
+  cd $1
+}
+
+
+# Get the colored part of the prompt which displays the active virtual env
 __get_venv_color() {
-  # Get the colored part of the prompt which displays the active virtual env
   local venv_name="$(basename "$VIRTUAL_ENV")"
   local venv_color=""
   if [ -n "$venv_name" ]; then
@@ -19,3 +27,25 @@ __get_venv_color() {
   fi
   echo "$venv_color"
 }
+
+
+# Autocompletion for Makefiles
+function _makefile_targets {
+    local curr_arg;
+    local targets;
+
+    # Find makefile targets available in the current directory
+    targets=''
+    if [[ -e "$(pwd)/Makefile" ]]; then
+        targets=$( \
+            grep -oE '^[a-zA-Z0-9_-]+:' Makefile \
+            | sed 's/://' \
+            | tr '\n' ' ' \
+        )
+    fi
+
+    # Filter targets based on user input to the bash completion
+    curr_arg=${COMP_WORDS[COMP_CWORD]}
+    COMPREPLY=( $(compgen -W "${targets[@]}" -- $curr_arg ) );
+}
+complete -F _makefile_targets make
