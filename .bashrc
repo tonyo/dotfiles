@@ -149,9 +149,9 @@ function prompt_command {
     local txtreset="\e[0m"
 
     if [[ "$EXIT" == "0" ]]; then
-        CMD_STATUS="${txtgreen}✓${txtreset}"
+        CMD_STATUS="\[${txtgreen}\]✓\[${txtreset}\]"
     else
-        CMD_STATUS="${txtviolet}✘${txtreset}"
+        CMD_STATUS="\[${txtviolet}\]✘\[${txtreset}\]"
     fi
 
     # Prompt components
