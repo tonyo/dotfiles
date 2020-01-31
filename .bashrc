@@ -169,14 +169,16 @@ PROMPT_COMMAND=prompt_command
 
 export TERM='xterm-256color'
 
-# git aliases
+### git aliases
 alias gitst='git status'
 alias gitf='git fetch'
 alias gitd='git diff'
 alias gitdc='git diff --cached'
 alias gitl='git log'
+# Jump to the directory root
+alias cdr='cd $(git rev-parse --show-toplevel)'
 
-# tmux aliases
+### tmux aliases
 alias tm='tmux'
 
 # apt-get & yum update-upgrade
