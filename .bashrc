@@ -178,6 +178,9 @@ alias gitl='git log'
 # Jump to the directory root
 alias cdr='cd $(git rev-parse --show-toplevel)'
 
+# Grep for file names in the current directory
+alias fdg='fd . | grep -i --color=auto'
+
 ### tmux aliases
 alias tm='tmux'
 
