@@ -102,18 +102,6 @@ if [ -f /etc/bashrc ]; then
   . /etc/bashrc
 fi
 
-# User specific aliases and functions
-if [ -f ~/.bashrc_functions ]; then
-  . ~/.bashrc_functions
-fi
-# Local configuration
-if [ -f ~/.bashrc_local ]; then
-  . ~/.bashrc_local
-fi
-if [ -f ~/.bashrc_functions_local ]; then
-  . ~/.bashrc_functions_local
-fi
-
 ################
 # PATH updates #
 ################
@@ -217,3 +205,15 @@ fi
 # Locale stuff
 export LC_ALL=en_US.UTF-8
 export LANG=en_US.UTF-8
+
+# User specific aliases and functions
+if [ -f ~/.bashrc_functions ]; then
+  . ~/.bashrc_functions
+fi
+# Local configuration
+if [ -f ~/.bashrc_local ]; then
+  . ~/.bashrc_local
+fi
+if [ -f ~/.bashrc_functions_local ]; then
+  . ~/.bashrc_functions_local
+fi
