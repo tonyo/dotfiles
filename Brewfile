@@ -1,5 +1,6 @@
 # Common
 brew 'bash'
+brew 'bash-completion'
 brew 'cask'
 brew 'curl'
 brew 'direnv'
