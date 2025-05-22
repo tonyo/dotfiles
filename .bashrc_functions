@@ -30,7 +30,7 @@ __get_venv_color() {
 
 
 # Autocompletion for Makefiles
-function _makefile_targets {
+_makefile_targets() {
     local curr_arg;
     local targets;
 
@@ -58,4 +58,17 @@ what-listens() {
 kill-on-port() {
   PORT=$1
   sudo lsof -iTCP -sTCP:LISTEN -n -P | grep $PORT | awk '{ print $2 }' | xargs kill -9;
+}
+
+br() {
+  for i in {1..80}; do echo -ne " #\n"; done
+}
+
+
+gpb() {
+  git push --set-upstream origin "$(git rev-parse --abbrev-ref HEAD)"
+}
+
+main() {
+  git checkout main || git checkout master
 }
