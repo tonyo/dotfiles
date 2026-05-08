@@ -1,4 +1,16 @@
-#!/bin/bash
+#!/usr/bin/env bash
+# Status line for Claude Code.
+# To enable it, move this script to ~/.claude/statusline-command.sh, and add
+# the following to ~/.claude/settings.json:
+#
+# {
+#   ...
+#   "statusLine": {
+#     "type": "command",
+#     "command": "bash /home/tonyo/.claude/statusline-command.sh"
+#   },
+#   ...
+# }
 input=$(cat)
 
 mapfile -t _f < <(echo "$input" | jq -r '
@@ -10,7 +22,7 @@ mapfile -t _f < <(echo "$input" | jq -r '
 ')
 MODEL="${_f[0]}" DIR="${_f[1]}" COST="${_f[2]}" PCT="${_f[3]}" DURATION_MS="${_f[4]}"
 
-CYAN='\033[36m'; GREEN='\033[32m'; YELLOW='\033[33m'; RED='\033[31m'; RESET='\033[0m'
+CYAN='\033[36m'; GREEN='\033[32m'; YELLOW='\033[33m'; RED='\033[31m'; BLUE='\033[34m'; RESET='\033[0m'
 
 if   [ "$PCT" -ge 90 ]; then BAR_COLOR="$RED"
 elif [ "$PCT" -ge 70 ]; then BAR_COLOR="$YELLOW"
@@ -38,7 +50,7 @@ if [ $? -eq 0 ]; then
     fi
   done <<< "$GIT_STATUS"
 
-  BRANCH=" | 🌿 ${BRANCH_NAME}"
+  BRANCH="🌿 ${BRANCH_NAME}"
 
   if   [ -n "$HAS_UNSTAGED" ] && [ -n "$HAS_STAGED" ]; then CHANGE_FLAG="*+ "
   elif [ -n "$HAS_UNSTAGED" ]; then CHANGE_FLAG="* "
@@ -50,7 +62,7 @@ if [ $? -eq 0 ]; then
     if   [ "$AHEAD" -gt 0 ] && [ "$BEHIND" -gt 0 ]; then UPSTREAM_STATUS="${GREEN}+${AHEAD}${RESET}${RED}-${BEHIND}${RESET}"
     elif [ "$AHEAD" -gt 0 ];  then UPSTREAM_STATUS="${GREEN}+${AHEAD}${RESET}"
     elif [ "$BEHIND" -gt 0 ]; then UPSTREAM_STATUS="${RED}-${BEHIND}${RESET}"
-    else                           UPSTREAM_STATUS="="
+    else                           UPSTREAM_STATUS="${BLUE}=${RESET}"
     fi
     AHEAD_BEHIND=" (${CHANGE_FLAG}u${UPSTREAM_STATUS})"
   elif [ -n "$CHANGE_FLAG" ]; then
@@ -64,5 +76,5 @@ if [ $? -eq 0 ]; then
 fi
 
 COST_FMT=$(printf '$%.2f' "$COST")
-echo -e "${CYAN}[$MODEL]${RESET} 📁 ${DIR##*/}${BRANCH}${AHEAD_BEHIND}${DIFF_STATS}"
-echo -e "${BAR_COLOR}${BAR}${RESET} ${PCT}% | ${YELLOW}${COST_FMT}${RESET} | ⏱️ ${MINS}m ${SECS}s"
+echo -e "${CYAN}[$MODEL]${RESET} 📁 ${DIR##*/} | ${BAR_COLOR}${BAR}${RESET} ${PCT}% | ${YELLOW}${COST_FMT}${RESET}"
+echo -e "${BRANCH}${AHEAD_BEHIND}${DIFF_STATS} | ⏱️  ${MINS}m ${SECS}s"
