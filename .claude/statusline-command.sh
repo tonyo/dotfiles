@@ -7,20 +7,19 @@
 #   ...
 #   "statusLine": {
 #     "type": "command",
-#     "command": "bash /home/tonyo/.claude/statusline-command.sh"
+#     "command": "bash \"$HOME/.claude/statusline-command.sh\""
 #   },
 #   ...
 # }
 input=$(cat)
 
-mapfile -t _f < <(echo "$input" | jq -r '
+{ read -r MODEL; read -r DIR; read -r COST; read -r PCT; read -r DURATION_MS; } <<< "$(echo "$input" | jq -r '
   .model.display_name,
   .workspace.current_dir,
   (.cost.total_cost_usd // 0),
   (.context_window.used_percentage // 0 | floor),
   (.cost.total_duration_ms // 0)
-')
-MODEL="${_f[0]}" DIR="${_f[1]}" COST="${_f[2]}" PCT="${_f[3]}" DURATION_MS="${_f[4]}"
+')"
 
 CYAN='\033[36m'; GREEN='\033[32m'; YELLOW='\033[33m'; RED='\033[31m'; BLUE='\033[34m'; RESET='\033[0m'
 
