@@ -1,0 +1,49 @@
+#!/bin/sh
+# ~/.sh.functions
+# Shared shell helpers for bash and zsh.
+# Safe to source from either shell.
+
+u() {
+  local steps="${1:-1}"
+  local i
+
+  case "$steps" in
+    ''|*[!0-9]*) steps=1 ;;
+  esac
+
+  for i in $(seq 1 "$steps"); do
+    cd .. || return 1
+  done
+}
+
+mkd() {
+  local dir="${1:-.}"
+  mkdir -p -- "$dir" && cd -- "$dir" || return 1
+}
+
+what-listens() {
+  local port="${1:-}"
+  [ -n "$port" ] || { echo "Usage: what-listens PORT" >&2; return 1; }
+  sudo lsof -nP -iTCP -sTCP:LISTEN | grep -- "$port"
+}
+
+kill-on-port() {
+  local port="${1:-}"
+  [ -n "$port" ] || { echo "Usage: kill-on-port PORT" >&2; return 1; }
+  sudo lsof -nP -iTCP -sTCP:LISTEN | grep -- "$port" | awk '{print $2}' | xargs -r kill -9
+}
+
+br() {
+  local i
+  for i in $(seq 1 80); do
+    printf ' #\n'
+  done
+}
+
+gpb() {
+  git push --set-upstream origin "$(git rev-parse --abbrev-ref HEAD)"
+}
+
+main() {
+  git checkout main || git checkout master
+}

@@ -1,5 +1,8 @@
 #!/bin/sh
 
+# Common bash/zsh functions
+[ -f ~/.sh.functions ] && . ~/.sh.functions
+
 # Move to parent directories N times
 u() {
   local N=1
