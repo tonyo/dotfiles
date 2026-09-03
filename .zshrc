@@ -16,3 +16,6 @@ export HOMEBREW_NO_AUTO_UPDATE=1
 # Common shell config
 [ -f ~/.sh.aliases ] && source ~/.sh.aliases
 [ -f ~/.sh.functions ] && source ~/.sh.functions
+
+# Use vim as default editor
+export EDITOR=vim
