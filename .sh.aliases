@@ -1,0 +1,37 @@
+# Shell aliases
+
+# git
+alias gitst='git status'
+alias gitf='git fetch'
+alias gitd='git diff'
+alias gitdc='git diff --cached'
+alias gitl='git log'
+
+# tmux
+alias tm='tmux'
+
+# misc
+alias tf=terraform
+alias tg=terragrunt
+alias kod='code .'
+
+# Kubernetes
+alias k=kubectl
+alias kg='kubectl get'
+alias kgp='kubectl get pod'
+alias kgd='kubectl get deployment'
+alias kgi='kubectl get ingress'
+alias kgn='kubectl get nodes'
+alias kd='kubectl describe'
+alias kdp='kubectl describe pod'
+alias kdd='kubectl describe deployment'
+alias kdi='kubectl describe ingress'
+alias kdn='kubectl describe node'
+
+alias kx='kubectx'
+alias kcx='kubectl config current-context'
+
+alias k9s-dangerous='k9s --write'
+
+### AWS
+alias aws-whoami='aws sts get-caller-identity'
