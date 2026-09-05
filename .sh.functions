@@ -47,3 +47,61 @@ gpb() {
 main() {
   git checkout main || git checkout master
 }
+
+# Expressive git prompt segment (overrides ys theme's git_prompt_info).
+# on git:<branch> (<dirty-flag> <ahead/behind>)
+#   dirty-flag: o=clean, +=staged, *=unstaged, *+=both (staged shown last)
+#   ahead/behind: +N/-N vs upstream, only when tracking a remote branch
+# zsh/Oh My Zsh only (prompt color escapes, git_current_branch); no-op elsewhere.
+if [ -n "$ZSH_VERSION" ]; then
+git_prompt_info() {
+	local ref
+	ref=$(git_current_branch) || return
+	[[ -z "$ref" ]] && return
+
+	local gs line has_tracking="" ahead=0 behind=0 has_staged="" has_unstaged=""
+	gs=$(git status --porcelain=v2 --branch 2>/dev/null) || return
+
+	while IFS= read -r line; do
+		case "$line" in
+			"# branch.upstream "*)
+				has_tracking=1
+				;;
+			"# branch.ab "*)
+				local ab="${line#'# branch.ab '}"
+				ahead="${ab%% *}"; ahead="${ahead#+}"
+				behind="${ab##* }"; behind="${behind#-}"
+				;;
+			[12]\ *)
+				local xy="${line:2:2}"
+				[[ "${xy:0:1}" != "." ]] && has_staged=1
+				[[ "${xy:1:1}" != "." ]] && has_unstaged=1
+				;;
+		esac
+	done <<< "$gs"
+
+	local dirty
+	if [[ -n "$has_staged" && -n "$has_unstaged" ]]; then
+		dirty="%{$fg[red]%}*%{$reset_color%}%{$fg[green]%}+%{$reset_color%}"
+	elif [[ -n "$has_unstaged" ]]; then
+		dirty="%{$fg[red]%}*%{$reset_color%}"
+	elif [[ -n "$has_staged" ]]; then
+		dirty="%{$fg[green]%}+%{$reset_color%}"
+	else
+		dirty="%{$fg[green]%}o%{$reset_color%}"
+	fi
+
+	local ab_info=""
+	if [[ -n "$has_tracking" ]]; then
+		if (( ahead > 0 && behind > 0 )); then
+			ab_info=" %{$fg[green]%}+${ahead}%{$reset_color%}%{$fg[red]%}-${behind}%{$reset_color%}"
+		elif (( ahead > 0 )); then
+			ab_info=" %{$fg[green]%}+${ahead}%{$reset_color%}"
+		elif (( behind > 0 )); then
+			ab_info=" %{$fg[red]%}-${behind}%{$reset_color%}"
+		fi
+	fi
+
+	echo "${YS_VCS_PROMPT_PREFIX1}git${YS_VCS_PROMPT_PREFIX2}${ref}%{$reset_color%} (${dirty}${ab_info}%{$reset_color%})${YS_VCS_PROMPT_SUFFIX}"
+}
+fi
