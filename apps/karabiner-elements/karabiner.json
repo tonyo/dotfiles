@@ -4,8 +4,19 @@
             "complex_modifications": {
                 "rules": [
                     {
-                        "description": "Right Command + U/I/O/P maps to Home/PageDown/PageUp/End",
+                        "description": "Right Command + Y/U/I/O maps to Home/PageDown/PageUp/End",
                         "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "y",
+                                    "modifiers": {
+                                        "mandatory": ["right_command"],
+                                        "optional": ["any"]
+                                    }
+                                },
+                                "to": [{ "key_code": "home" }],
+                                "type": "basic"
+                            },
                             {
                                 "from": {
                                     "key_code": "u",
@@ -14,7 +25,7 @@
                                         "optional": ["any"]
                                     }
                                 },
-                                "to": [{ "key_code": "home" }],
+                                "to": [{ "key_code": "page_down" }],
                                 "type": "basic"
                             },
                             {
@@ -31,17 +42,6 @@
                             {
                                 "from": {
                                     "key_code": "o",
-                                    "modifiers": {
-                                        "mandatory": ["right_command"],
-                                        "optional": ["any"]
-                                    }
-                                },
-                                "to": [{ "key_code": "page_down" }],
-                                "type": "basic"
-                            },
-                            {
-                                "from": {
-                                    "key_code": "p",
                                     "modifiers": {
                                         "mandatory": ["right_command"],
                                         "optional": ["any"]
