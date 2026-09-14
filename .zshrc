@@ -1,4 +1,7 @@
-# Load Oh My Zsh config
+### Load Oh My Zsh config
+# For new installations:
+#   cp ~/.oh-my-zsh/templates/zshrc.zsh-template ~/.zshrc.oh-my-zsh
+export ZSH_THEME="ys"
 [ -f ~/.zshrc.oh-my-zsh ] && source ~/.zshrc.oh-my-zsh
 
 export WORDCHARS='*?_-.[]~=/&;!#$%^(){}<>'
