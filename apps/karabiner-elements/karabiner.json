@@ -4,6 +4,22 @@
             "complex_modifications": {
                 "rules": [
                     {
+                        "description": "Right Command + D to Delete",
+                        "manipulators": [
+                            {
+                                "from": {
+                                    "key_code": "d",
+                                    "modifiers": {
+                                        "mandatory": ["right_command"],
+                                        "optional": ["caps_lock"]
+                                    }
+                                },
+                                "to": [{ "key_code": "delete_forward" }],
+                                "type": "basic"
+                            }
+                        ]
+                    },
+                    {
                         "description": "Right Command + Y/U/I/O maps to Home/PageDown/PageUp/End",
                         "manipulators": [
                             {
@@ -53,7 +69,7 @@
                         ]
                     },
                     {
-                        "description": "Change right_command+hjkl to arrow keys",
+                        "description": "Right Command + hjkl to arrow keys",
                         "manipulators": [
                             {
                                 "from": {
